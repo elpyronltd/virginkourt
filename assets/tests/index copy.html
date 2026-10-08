@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgin Kourt | Elegance Redefined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --honey: #D4AF37;
+            --milk: #FDFCF0;
+            --soft-grey: #F5F5F7;
+            --text-dark: #2D2D2D;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--milk);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            margin: 0;
+            perspective: 2000px;
+            /* Required for the flip animation */
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Video Background Fixed Parallax */
+        #bg-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        #bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        /* Glassmorphism Header */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 5%;
+            right: 5%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transform: translateY(-150%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        header.scrolled {
+            background: rgba(253, 252, 240, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.2);
+        }
+
+        /* Hero Logo Reveal */
+        #hero-logo-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .outline-logo {
+            font-size: 8rem;
+            font-weight: 200;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--honey);
+            letter-spacing: 15px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Image Stack Animation */
+        .image-stack {
+            position: relative;
+            height: 500px;
+            width: 100%;
+        }
+
+        .stack-img {
+            position: absolute;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 4px solid white;
+            transition: transform 0.5s ease;
+        }
+
+        /* Flip Pivot Section */
+        #suites-wrapper {
+            position: relative;
+            z-index: 20;
+            transform-origin: bottom left;
+            background: var(--milk);
+        }
+
+        .section-padding {
+            padding: 100px 10%;
+        }
+
+        .honey-btn {
+            background: var(--honey);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Facilities Section Style */
+        #facilities-section {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+            color: white;
+        }
+
+        /* Footer Style based on Uploaded Image */
+        footer {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            padding: 40px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .social-sidebar {
+            position: absolute;
+            right: 40px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Fixed Video Background -->
+    <div id="bg-video-container">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source
+                src="assets/mixkit-woman-carrying-a-suitcase-arriving-at-a-hotel-17041-hd-ready.mp4"
+                type="video/mp4">
+        </video>
+    </div>
+
+    <header id="main-header">
+        <div class="flex justify-between items-center">
+            <div class="logo-text text-2xl font-semibold text-[#D4AF37]">VIRGIN KOURT</div>
+            <nav class="hidden md:flex space-x-8 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                <a href="#" class="hover:text-[#D4AF37] transition">About Us</a>
+                <a href="#" class="hover:text-[#D4AF37] transition">Facilities</a>
+                <a href="#" class="hover:text-[#D4AF37] transition">Gallery</a>
+            </nav>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-[10px] font-bold uppercase tracking-tighter text-gray-400">Login</a>
+                <a href="#" class="honey-btn">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero-logo-container">
+        <h1 class="outline-logo" id="reveal-logo">VK</h1>
+    </section>
+
+    <!-- Suites Wrapper (This section will flip) -->
+    <div id="suites-wrapper">
+        <!-- History Section -->
+        <section class="section-padding bg-white">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="reveal-up">
+                    <h3 class="text-[#D4AF37] uppercase tracking-widest text-xs font-bold mb-4">Brief History</h3>
+                    <h2 class="text-6xl mb-8 leading-tight">Crafting Memories <br>Since 1992</h2>
+                    <p class="text-gray-500 leading-relaxed mb-10 max-w-md">
+                        A sanctuary where architectural brilliance meets natural serenity. Virgin Kourt began as a
+                        family estate, transformed over decades into the pinnacle of global hospitality.
+                    </p>
+                    <a href="#" class="honey-btn">Read More</a>
+                </div>
+                <!-- Animated Stacked Images -->
+                <div class="image-stack" id="history-stack">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&q=80"
+                        class="stack-img w-64 h-80 z-10 top-0 left-20" alt="History 1">
+                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&q=80"
+                        class="stack-img w-64 h-80 z-20 top-10 left-10" alt="History 2">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&q=80"
+                        class="stack-img w-64 h-80 z-30 top-20 left-0" alt="History 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- Suites Section -->
+        <section class="section-padding bg-[var(--soft-grey)]">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <h3 class="text-[#D4AF37] uppercase tracking-widest text-xs font-bold mb-2">Accommodations</h3>
+                    <h2 class="text-5xl">Suites & Rooms</h2>
+                </div>
+                <a href="#" class="text-xs font-bold uppercase border-b-2 border-[#D4AF37] pb-1">View All Suites</a>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-white p-4 rounded-xl shadow-xl reveal-up">
+                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80"
+                        class="rounded-lg mb-6 w-full h-48 object-cover" alt="Room">
+                    <h4 class="text-xl mb-2">Skyloft Penthouse</h4>
+                    <p class="text-gray-400 text-sm mb-4">Panoramic horizons with bespoke service.</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-xl reveal-up" style="transition-delay: 0.2s">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80"
+                        class="rounded-lg mb-6 w-full h-48 object-cover" alt="Room">
+                    <h4 class="text-xl mb-2">Golden Terrace</h4>
+                    <p class="text-gray-400 text-sm mb-4">Sun-drenched interiors and private pools.</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-xl reveal-up" style="transition-delay: 0.4s">
+                    <img src="https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=600&q=80"
+                        class="rounded-lg mb-6 w-full h-48 object-cover" alt="Room">
+                    <h4 class="text-xl mb-2">Heritage Studio</h4>
+                    <p class="text-gray-400 text-sm mb-4">Modern comforts in a timeless setting.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Facilities Section (Revealed by Flip) -->
+    <section id="facilities-section" class="section-padding min-h-screen relative">
+        <div class="max-w-2xl">
+            <h3 class="text-[#D4AF37] uppercase tracking-widest text-xs font-bold mb-4">The Experience</h3>
+            <h2 class="text-6xl mb-8 leading-tight">Mastering The <br>Art of Living</h2>
+            <p class="text-gray-300 leading-relaxed mb-12">
+                Every corner of Virgin Kourt is a destination. From our Michelin-starred kitchen to the rooftop
+                sanctuary, we offer more than a stay—we offer a lifestyle.
+            </p>
+            <div class="grid grid-cols-2 gap-8 mb-12">
+                <div>
+                    <h5 class="text-[#D4AF37] font-bold mb-2 italic">Golden Spa</h5>
+                    <p class="text-xs text-gray-400">Rejuvenation through ancient honey-based therapies.</p>
+                </div>
+                <div>
+                    <h5 class="text-[#D4AF37] font-bold mb-2 italic">Azure Pool</h5>
+                    <p class="text-xs text-gray-400">An infinity edge that merges with the Atlantic.</p>
+                </div>
+            </div>
+            <a href="#" class="honey-btn">Explore Facilities</a>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="h-[50vh] relative z-10 grayscale hover:grayscale-0 transition duration-1000">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.95373531531615!3d-37.816279742021234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0x5045675218ce6e0!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2s!4v1633000000000!5m2!1sen!2s"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <!-- Footer - Visual Recreation of Uploaded Image -->
+    <footer id="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <!-- Top Footer Bar -->
+            <div class="flex justify-between items-center">
+                <div class="logo-text text-3xl font-light italic">Virgin Kourt</div>
+                <div class="flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium">
+                    <a href="#">English</a>
+                    <a href="#" class="opacity-50">Italiano</a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <!-- Social Icons (Simulated as circles like image) -->
+                    <div class="flex space-x-4">
+                        <div
+                            class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            f</div>
+                        <div
+                            class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            ig</div>
+                        <div
+                            class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            @</div>
+                    </div>
+                    <button
+                        class="border border-white/50 px-6 py-2 rounded-full text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition">Book
+                        Now &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Bottom Left Info -->
+            <div class="max-w-xs text-[11px] leading-relaxed tracking-wider opacity-80 mt-auto">
+                <p>Via Capriglione, 147</p>
+                <p>84010 Praiano</p>
+                <p>Amalfi Coast, SA</p>
+                <p>ITALY</p>
+                <p class="mt-4">ph +39 089 8131333</p>
+                <p>fax +39 089 874266</p>
+                <p class="mt-4 text-[9px] opacity-40 uppercase">CIN: IT065102A14H5PUG5R</p>
+            </div>
+
+            <!-- Social Sidebar -->
+            <div class="social-sidebar">
+                <div class="text-lg">f</div>
+                <div class="text-lg">ig</div>
+                <div class="text-lg">tw</div>
+            </div>
+
+            <!-- Copyright Line -->
+            <div
+                class="pt-10 flex justify-between items-center text-[9px] tracking-[0.2em] uppercase opacity-50 border-t border-white/10 mt-10">
+                <span>&copy; Virgin Kourt 2026 | All rights reserved</span>
+                <button class="honey-btn py-2 text-[8px]">Rate Us</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Initial Hero Logic
+        const header = document.getElementById('main-header');
+        const revealLogo = document.getElementById('reveal-logo');
+
+        gsap.to(revealLogo, {
+            scrollTrigger: {
+                trigger: "#hero-logo-container",
+                start: "top top",
+                end: "bottom center",
+                scrub: 1,
+            },
+            scale: 0.2,
+            opacity: 0,
+            y: -100
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 150) {
+                header.style.transform = 'translateY(0)';
+                header.classList.add('scrolled');
+            } else {
+                header.style.transform = 'translateY(-150%)';
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. History Image Stack Animation
+        const stackImages = document.querySelectorAll('.stack-img');
+        gsap.from(stackImages, {
+            scrollTrigger: {
+                trigger: "#history-stack",
+                start: "top 80%",
+            },
+            x: -200,
+            opacity: 0,
+            stagger: 0.3,
+            rotate: -10,
+            duration: 1.5,
+            ease: "power4.out"
+        });
+
+        // 3. Pivot Flip Animation
+        // This flips the entire top section away to reveal the facilities beneath
+        gsap.to("#suites-wrapper", {
+            scrollTrigger: {
+                trigger: "#facilities-section",
+                start: "top bottom",
+                end: "top top",
+                scrub: true,
+            },
+            rotationY: -15,
+            rotationX: 10,
+            scale: 0.8,
+            xPercent: -50,
+            opacity: 0,
+            ease: "none"
+        });
+
+        // 4. Parallax Background Video
+        gsap.to("#bg-video", {
+            scrollTrigger: {
+                scrub: true
+            },
+            yPercent: 15,
+            ease: "none"
+        });
+
+        // 5. General Reveals
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 90%",
+                },
+                y: 60,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+
+</html>

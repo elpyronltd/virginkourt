@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgin Kourt | Elegance Redefined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Plaster&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --honey: #e6b71c;
+            --milk: #FDFCF0;
+            --soft-grey: #F5F5F7;
+            --bg-cream: #fdfaf3;
+            --accent-gold: #ffc400;
+            --btn-gold: #ffbb00;
+            --text-dark: #2D2D2D;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--milk);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Video Background Fixed Parallax */
+        #bg-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        #bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(19, 19, 19, 0.705), rgba(0, 0, 0, 0.288) 70%);
+            opacity: 0;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 5%;
+            right: 5%;
+            z-index: 1000;
+            padding: 10px 2rem;
+            background: rgba(255, 255, 255, 0.76);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.1);
+            transform: translateY(-150%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+        }
+
+        header.scrolled {
+            box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(224, 173, 3, 0.4);
+        }
+
+        /* Hero Logo Reveal */
+        #hero-logo-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .outline-logo {
+            font-size: 9rem;
+            font-weight: 200;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--honey);
+            letter-spacing: 15px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Content Sections */
+        .section-padding {
+            padding: 100px 10%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .honey-btn {
+            background: var(--honey);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .honey-btn:hover {
+            background: #dfa700e8;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .glass-nav-link {
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .glass-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--honey);
+            transition: width 0.3s ease;
+        }
+
+        .glass-nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--milk);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--honey);
+            border-radius: 10px;
+        }
+
+        #map-section {
+            margin: 15px 0 20px 0;
+            padding: 0 3%
+        }
+
+        #main-footer {
+            min-height: 70vh;
+            color: white;
+            margin: 20px 0;
+        }
+
+        .footer-content {
+            padding: 10% 5% 10px 5%;
+            position: relative;
+            min-height: 60vh;
+        }
+
+        #copyright {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            right: 5%;
+        }
+
+        @media(max-width: 890px) {
+            .footer-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .footer-in {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media(max-width:500px) {
+            #main-footer {
+                min-height: 75vh;
+                margin: 35px 0 0 0;
+            }
+        }
+    </style>
+    <style>
+        h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+
+
+        .cta-button {
+            background-color: var(--btn-gold);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(217, 184, 90, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 20px rgba(217, 184, 90, 0.3);
+        }
+
+        /* Stacked Image Card Logic */
+        .card-stack {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            perspective: 1000px;
+        }
+
+        .image-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            background-color: #eee;
+            border: 4px solid white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            /* Let clicks pass to the card div */
+        }
+
+        /* Dynamic Positioning States */
+        /* Position 1 (Top) */
+        .pos-1 {
+            z-index: 30;
+            transform: translate(0, 0) rotate(-2deg);
+            opacity: 1;
+        }
+
+        /* Position 2 (Middle) */
+        .pos-2 {
+            z-index: 20;
+            transform: translate(25px, 25px) rotate(4deg);
+            opacity: 0.9;
+        }
+
+        /* Position 3 (Bottom) */
+        .pos-3 {
+            z-index: 10;
+            transform: translate(50px, 50px) rotate(10deg);
+            opacity: 0.8;
+        }
+
+        /* Interaction spreading */
+        .card-stack:hover .pos-1 {
+            transform: translate(-30px, -15px) rotate(-6deg);
+        }
+
+        .card-stack:hover .pos-2 {
+            transform: translate(15px, 0px) rotate(2deg);
+        }
+
+        .card-stack:hover .pos-3 {
+            transform: translate(60px, 25px) rotate(8deg);
+        }
+
+        @media (max-width: 768px) {
+            .card-stack {
+                height: 300px;
+                max-width: 80%;
+            }
+        }
+
+
+
+
+
+        /* SUITES & BELOW */
+
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Pivot Exit Animation Logic */
+        #suites-section {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background-color: var(--bg-cream);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s ease;
+            transform-origin: bottom left;
+        }
+
+        /* This class will be toggled by JS when scrolling past a certain point */
+        .spin-out {
+            transform: rotate(-110deg) translateY(200px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Stacked Image Card Logic for Suites */
+        .suite-card-stack {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            max-width: 400px;
+            perspective: 1000px;
+        }
+
+        .suite-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 6px solid white;
+            cursor: pointer;
+        }
+
+        .suite-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .s-pos-1 {
+            z-index: 3;
+            transform: rotate(-3deg);
+        }
+
+        .s-pos-2 {
+            z-index: 2;
+            transform: translate(30px, 20px) rotate(5deg);
+            opacity: 0.9;
+        }
+
+        .s-pos-3 {
+            z-index: 1;
+            transform: translate(60px, 40px) rotate(12deg);
+            opacity: 0.8;
+        }
+
+        .suite-card-stack:hover .s-pos-1 {
+            transform: translate(-20px, -10px) rotate(-6deg);
+        }
+
+        .suite-card-stack:hover .s-pos-2 {
+            transform: translate(20px, 5px) rotate(2deg);
+        }
+
+        .suite-card-stack:hover .s-pos-3 {
+            transform: translate(70px, 30px) rotate(8deg);
+        }
+
+        #divider-section {
+            min-height: 30vh;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        #divider-section h2 {
+            font-family: Plaster;
+            font-size: 3.5rem;
+            text-align: center;
+        }
+
+        #divider-section h3 {
+            font-family: Parisienne;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* Physical Facilities Image Cards */
+        .image-bg-card {
+            position: relative;
+            height: 400px;
+            border-radius: 2rem;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 2.5rem;
+            color: white;
+            transition: all 0.5s ease;
+        }
+
+        .image-bg-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 0.8s ease;
+        }
+
+        .image-bg-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
+            z-index: 2;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .image-bg-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Standard Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .view-link {
+            position: relative;
+            color: var(--honey);
+            font-weight: 600;
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .view-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--honey);
+            transition: width 0.3s ease;
+        }
+
+        .view-link:hover::after {
+            width: 100%;
+        }
+
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(230, 183, 28, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(50px);
+            animation: move 25s infinite alternate;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(-10%, -10%);
+            }
+
+            to {
+                transform: translate(30%, 30%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Parallax Video Background -->
+    <div id="bg-video-container">
+        <!-- Low bitrate nature/hotel placeholder video for smooth loading -->
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="assets/vids/mixkit-woman-carrying-a-suitcase-arriving-at-a-hotel-17041-hd-ready.mp4"
+                type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Hidden Header (Revealed on Scroll) -->
+    <header id="main-header">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <div class="logo-text text-2xl font-semibold text-[#000]" style="font-family: Plaster;">
+                VK
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-[#2D2D2D]">
+                <a href="#" class="glass-nav-link">About Us</a>
+                <a href="#" class="glass-nav-link">Facilities</a>
+                <a href="#" class="glass-nav-link">Gallery</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-l font-medium text-[#2D2D2D] hover:text-[#D4AF37] transition">Login</a>
+                <a href="#" class="honey-btn">Book</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero-logo-container">
+        <div class="text-center">
+            <h1 class="outline-logo" style="font-family: Plaster;" id="reveal-logo">VK</h1>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-center opacity-60">
+                <p class="text-white mt-4 uppercase tracking-[0.5em] font-extralight text-sm animate-pulse">Scroll to
+                    Explore</p>
+                <div class="w-px h-16 bg-gradient-to-b from-white to-transparent mx-auto"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-section" class="container mx-auto px-6 py-20 lg:py-32">
+        <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+            <!-- Left Side: Content -->
+            <div class="w-full lg:w-1/2 space-y-8 order-2 lg:order-1">
+                <div>
+                    <span class="text-[#ffc400] font-bold text-[30px] mb-4 block">OUR HERITAGE</span>
+                    <h2 class="text-5xl text-[#fdfaf3] lg:text-6xl font-normal leading-tight mb-6">
+                        A Legacy of Comfort
+                    </h2>
+                    <p class="text-lg leading-relaxed text-[#fdfaf3] max-w-xl">
+                        Established with the vision of blending timeless elegance with modern luxury, Virgin Kourt
+                        has stood as a beacon of hospitality for decades. What started as a boutique retreat has
+                        evolved into a sanctuary where every detail is a testament to our commitment to your comfort.
+                    </p>
+                </div>
+
+                <button class="cta-button px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest">
+                    Read Our Story
+                </button>
+            </div>
+
+            <!-- Right Side: Stacked Cards -->
+            <div class="w-full lg:w-1/2 flex justify-center order-1 lg:order-2">
+                <div class="card-stack" id="stack">
+                    <div class="image-card pos-1" data-pos="1">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"
+                            alt="Resort Pool">
+                    </div>
+                    <div class="image-card pos-2" data-pos="2">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+                            alt="Hotel Architecture">
+                    </div>
+                    <div class="image-card pos-3" data-pos="3">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80"
+                            alt="Seaside View">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 1: EXECUTIVE SUITES (With Sticky Exit Pivot) -->
+    <section id="suites-section" class="relative py-32 px-6 min-h-screen flex items-center overflow-hidden">
+        <div class="blob top-0 left-0"></div>
+        <div class="container mx-auto max-w-6xl" id="suites-content">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
+
+                <!-- Left Side: Image Pile -->
+                <div class="w-full lg:w-1/2 flex justify-center order-1">
+                    <div class="suite-card-stack" id="suiteStack">
+                        <div class="suite-image s-pos-1" data-pos="1">
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80"
+                                alt="Suite Living">
+                        </div>
+                        <div class="suite-image s-pos-2" data-pos="2">
+                            <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&fit=crop&w=1000&q=80"
+                                alt="Suite Bedroom">
+                        </div>
+                        <div class="suite-image s-pos-3" data-pos="3">
+                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=80"
+                                alt="Suite View">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Content -->
+                <div class="w-full lg:w-1/2 order-2">
+                    <span class="text-xs font-bold tracking-[0.3em] uppercase text-[#e6b71c] mb-4 block">Premium
+                        Stay</span>
+                    <h2 class="text-5xl lg:text-7xl mb-8">Executive Suites</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                        Experience the pinnacle of luxury in our newly renovated Executive Suites.
+                        Designed for the discerning traveler, each suite offers panoramic views,
+                        bespoke furnishings, and a level of privacy that redefines the boutique hotel experience.
+                    </p>
+
+                    <div class="mb-10">
+                        <a href="#" class="view-link text-sm uppercase tracking-widest">View All Suites</a>
+                    </div>
+
+                    <div class="flex gap-8 border-t border-gray-200 pt-8">
+                        <div>
+                            <span class="block text-2xl font-bold">45</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-400">Suites Available</span>
+                        </div>
+                        <div class="w-px h-12 bg-gray-200"></div>
+                        <div>
+                            <span class="block text-2xl font-bold">24hr</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-400">Butler Service</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Spacer to allow for the sticky spin-out effect -->
+    <div id="divider-section">
+        <h3 class="text-[25px] font-italic">At</h3>
+        <h2 class="text-[35px] font-bold">VIRGIN KOURTS</h2>
+        <h3 class="text-[20px] font-italic">We Delivery Experience, Not Just Hospitality</h3>
+    </div>
+
+    <!-- SECTION 2: FACILITIES (Physical with Images) -->
+    <section id="facilities-anchor" class="relative py-24 px-6 bg-white z-10">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex justify-between items-end mb-16 reveal">
+                <div>
+                    <span class="text-xs font-bold tracking-[0.3em] uppercase text-[#e6b71c] mb-4 block">The
+                        Experience</span>
+                    <h2 class="text-4xl md:text-5xl">Physical Facilities</h2>
+                </div>
+                <a href="#" class="view-link text-sm uppercase tracking-widest mb-2">View All Facilities</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="image-bg-card reveal">
+                    <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80"
+                        alt="Conference">
+                    <div class="card-content">
+                        <h3 class="text-3xl mb-2 text-white">Conference Suites</h3>
+                        <p class="text-gray-300">Modern tech for global minds.</p>
+                    </div>
+                </div>
+                <div class="image-bg-card reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
+                        alt="Gym">
+                    <div class="card-content">
+                        <h3 class="text-3xl mb-2 text-white">Elite Fitness Center</h3>
+                        <p class="text-gray-300">Premium equipment for peak performance.</p>
+                    </div>
+                </div>
+                <div class="image-bg-card reveal">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                        alt="Restaurant">
+                    <div class="card-content">
+                        <h3 class="text-3xl mb-2 text-white">Signature Dining</h3>
+                        <p class="text-gray-300">Culinary excellence in every bite.</p>
+                    </div>
+                </div>
+                <div class="image-bg-card reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80"
+                        alt="Pool">
+                    <div class="card-content">
+                        <h3 class="text-3xl mb-2 text-white">Infinity Pools</h3>
+                        <p class="text-gray-300">Serenity meet luxury waters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: UTILITIES (Service Cards) -->
+    <section class="relative py-24 px-6 bg-[var(--bg-cream)]">
+        <div class="container mx-auto max-w-6xl">
+            <div class="mb-16 reveal">
+                <span class="text-xs font-bold tracking-[0.3em] uppercase text-[#e6b71c] mb-4 block">Always On</span>
+                <h2 class="text-4xl md:text-5xl mb-4">Core Utilities</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div
+                    class="service-card p-10 bg-white border border-[#e6b71c1a] rounded-[2rem] reveal flex items-center gap-8">
+                    <div
+                        class="w-20 h-20 bg-[var(--milk)] text-[var(--honey)] rounded-2xl flex-shrink-0 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 13a10 10 0 0 1 14 0" />
+                            <path d="M8.5 16.5a5 5 0 0 1 7 0" />
+                            <path d="M2 8.82a15 15 0 0 1 20 0" />
+                            <line x1="12" x2="12.01" y1="20" y2="20" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl mb-2">Ultra-Fast WiFi</h3>
+                        <p class="text-gray-500">Fiber-optic connectivity property-wide.</p>
+                    </div>
+                </div>
+                <div
+                    class="service-card p-10 bg-white border border-[#e6b71c1a] rounded-[2rem] reveal flex items-center gap-8">
+                    <div
+                        class="w-20 h-20 bg-[var(--milk)] text-[var(--honey)] rounded-2xl flex-shrink-0 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2 L3 14 L12 14 L11 22 L21 10 L12 10 L13 2 Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl mb-2">Uninterrupted Power</h3>
+                        <p class="text-gray-500">24/7 dual-redundancy power systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map-section" class="relative h-96 z-10 grayscale hover:grayscale-0 transition duration-1000">
+        <div class="map-frame">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.372400628784!2d-2.3034170999999994!3d7.311994699999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdacfd6ed3fc90f%3A0x1c78ec84919c2156!2sVirgin%20Kourt%20Hotel!5e0!3m2!1sen!2sgh!4v1775103002192!5m2!1sen!2sgh"
+                width="100%" height="450" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer - Visual Recreation of Uploaded Image -->
+    <footer id="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <!-- Top Footer Bar -->
+            <div class="footer-top flex justify-between items-center">
+                <div class="logo-text text-6xl font-light italic">Virgin Kourt</div>
+                <div class="footer-in flex items-center" style="gap: 15px;">
+                    <!-- Social Icons (Simulated as circles like image) -->
+                    <div class="flex space-x-4">
+                        <div
+                            class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            <a href="https://facebook.com" class="text-[30px]" target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            <a href="https://instagram.com" class="text-[30px]" rel="noopener noreferrer"
+                                target="_blank">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-xs">
+                            <a href="https://twitter.com" class="text-[30px]" rel="noopener noreferrer" target="_blank">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <button
+                        class="border border-white/50 px-6 py-2 rounded-full text-[15px] uppercase tracking-widest hover:bg-white hover:text-black"
+                        style="transition: 2s;">Book
+                        Now &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Bottom Left Info -->
+            <div class="max-w-xs text-[15px] leading-relaxed tracking-wider opacity-80 mt-auto">
+                <p>Abesim, 147</p>
+                <p>Kumasi - Sunyani Rd.</p>
+                <p>Sunyani, Bono Region</p>
+                <p>GHANA</p>
+                <p class="mt-4">ph +233 089 8131333</p>
+                <p>fax +233 089 874266</p>
+                <p class="mt-4 text-[9px] opacity-40 uppercase">CIN: IT065102A14H5PUG5R</p>
+            </div>
+
+
+
+            <!-- Copyright Line -->
+            <div id="elpidev"
+                class="pt-10 flex justify-between items-center text-[15px] tracking-[0.2em] opacity-100 border-t border-white/10 mt-10">
+                <span>Bult with Precision by <a href="https://www.eLpi.dev" target="_blank" rel="noopener noreferrer">eLPi.dev</a></span>
+            </div>
+            <div id="copyright"
+                class="pt-10 flex justify-between items-center text-[10px] tracking-[0.2em] uppercase opacity-50 border-t border-white/10 mt-10">
+                <span>&copy; Virgin Kourt 2026 | All rights reserved</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Initial Hero Logo Animation and Header Reveal
+        const header = document.getElementById('main-header');
+        const revealLogo = document.getElementById('reveal-logo');
+        const overlay = document.querySelector('.video-overlay');
+
+        // Scroll Timeline
+        const mainTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#hero-logo-container",
+                start: "top top",
+                end: "bottom center",
+                scrub: 1,
+            }
+        });
+
+        // Logo moves up and scales down as user scrolls
+        mainTimeline.to(revealLogo, {
+            scale: 0.3,
+            y: -200,
+            opacity: 0,
+            duration: 1
+        });
+
+        // Overlay fades in to create a smoother transition to the light content
+        mainTimeline.to(overlay, {
+            opacity: 1,
+            duration: 1
+        }, 0);
+
+        // Header Reveal Logic
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 150) {
+                header.style.transform = 'translateY(0)';
+                header.classList.add('scrolled');
+            } else {
+                header.style.transform = 'translateY(-150%)';
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Section Animations
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
+        gsap.utils.toArray('.reveal-right').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                x: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power2.out"
+            });
+        });
+
+        // 3. Parallax effect for the background video container
+        gsap.to("#bg-video", {
+            scrollTrigger: {
+                scrub: true
+            },
+            yPercent: 20,
+            ease: "none"
+        });
+
+        // Handle video playback resilience
+        const video = document.getElementById('bg-video');
+        video.addEventListener('error', function () {
+            // If video fails, ensure background stays elegant
+            document.getElementById('bg-video-container').style.background = "url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat";
+        });
+
+        // ABOUT SECTION - Stacked Card Interaction Logic
+        const stack = document.getElementById('stack');
+        const cards = Array.from(stack.querySelectorAll('.image-card'));
+
+        // Handle Card Swapping
+        stack.addEventListener('click', (e) => {
+            const clickedCard = e.target.closest('.image-card');
+            if (!clickedCard || clickedCard.classList.contains('pos-1')) return;
+
+            // Get the current position of the clicked card
+            const oldPos = clickedCard.getAttribute('data-pos');
+
+            // Move the current top card to the back
+            const topCard = stack.querySelector('.pos-1');
+
+            cards.forEach(card => {
+                const currentPos = parseInt(card.getAttribute('data-pos'));
+                const clickedPos = parseInt(oldPos);
+
+                let newPos;
+                if (currentPos === clickedPos) {
+                    newPos = 1; // Clicked card goes to top
+                } else if (currentPos < clickedPos) {
+                    newPos = currentPos + 1; // Cards above the clicked one move down one level
+                } else {
+                    newPos = currentPos; // Cards below the clicked one stay where they are
+                }
+
+                card.setAttribute('data-pos', newPos);
+                card.className = `image-card pos-${newPos}`;
+            });
+        });
+
+        // Parallax Effect
+        window.addEventListener('load', () => {
+            const isMobile = window.innerWidth < 768;
+            if (!isMobile) {
+                document.addEventListener('mousemove', (e) => {
+                    const x = (window.innerWidth / 2 - e.pageX) / 60;
+                    const y = (window.innerHeight / 2 - e.pageY) / 60;
+                    stack.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+                });
+            }
+        });
+
+        // Video Scale Parallax
+        gsap.to("#hero-video", {
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            },
+            scale: 1.25,
+            opacity: 0.3
+        });
+
+    </script>
+
+    <script>
+        // Suite Stack Click Handler
+        const suiteStack = document.getElementById('suiteStack');
+        const suiteCards = Array.from(suiteStack.querySelectorAll('.suite-image'));
+
+        suiteStack.addEventListener('click', (e) => {
+            const clicked = e.target.closest('.suite-image');
+            if (!clicked || clicked.classList.contains('s-pos-1')) return;
+
+            const oldPos = parseInt(clicked.getAttribute('data-pos'));
+
+            suiteCards.forEach(card => {
+                const currentPos = parseInt(card.getAttribute('data-pos'));
+                let newPos;
+
+                if (currentPos === oldPos) {
+                    newPos = 1;
+                } else if (currentPos < oldPos) {
+                    newPos = currentPos + 1;
+                } else {
+                    newPos = currentPos;
+                }
+
+                card.setAttribute('data-pos', newPos);
+                card.className = `suite-image s-pos-${newPos}`;
+            });
+        });
+
+        // Spin-Out Logic on Scroll
+        const suitesSection = document.getElementById('suites-section');
+        const facilitiesSection = document.getElementById('facilities-anchor');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            const threshold = facilitiesSection.offsetTop - (window.innerHeight * 0.4);
+
+            if (scrollPos > threshold) {
+                suitesSection.classList.add('spin-out');
+            } else {
+                suitesSection.classList.remove('spin-out');
+            }
+        });
+
+        // Intersection Observer for standard reveals
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

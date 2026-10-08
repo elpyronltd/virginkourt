@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgin Kourt | Modern Luxury Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#050505',
+                        light: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass-nav {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .light .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero Video & Parallax */
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #hero-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .dark #hero-video {
+            filter: brightness(0.4);
+        }
+
+        .light #hero-video {
+            filter: brightness(0.85) saturate(0.7);
+        }
+
+        .logo-center {
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+            position: absolute;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .light .logo-center {
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Section Gaps */
+        .section-gap {
+            height: 45vh;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .content-block {
+            transition: background-color 0.5s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="dark bg-dark text-white overflow-x-hidden transition-colors duration-500">
+
+    <!-- Loading Overlay -->
+    <div id="loader"
+        class="fixed inset-0 z-[100] bg-black flex items-center justify-center transition-opacity duration-1000">
+        <div class="text-white text-xl font-light tracking-widest uppercase animate-pulse">Virgin Kourt</div>
+    </div>
+
+    <!-- Theme Switcher & Header -->
+    <header id="main-nav"
+        class="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 opacity-0 pointer-events-none transform -translate-y-10 transition-all duration-700">
+        <nav class="glass-nav rounded-2xl px-6 md:px-10 py-4 flex items-center justify-between">
+            <div class="text-2xl font-bold tracking-tighter dark:text-white text-black">VK</div>
+
+            <div
+                class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide dark:text-gray-400 text-gray-600">
+                <a href="#" class="hover:text-black dark:hover:text-white transition-colors">About Us</a>
+                <a href="#" class="hover:text-black dark:hover:text-white transition-colors">Facilities</a>
+                <a href="#" class="hover:text-black dark:hover:text-white transition-colors">Gallery</a>
+            </div>
+
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
+                    <i data-lucide="sun" class="hidden dark:block w-5 h-5 text-yellow-400"></i>
+                    <i data-lucide="moon" class="block dark:hidden w-5 h-5 text-gray-700"></i>
+                </button>
+                <div class="h-6 w-px bg-gray-300 dark:bg-white/20 hidden sm:block"></div>
+                <a href="#"
+                    class="text-xs font-semibold uppercase tracking-widest px-4 py-2 dark:text-gray-400 text-gray-600 hover:text-black dark:hover:text-white hidden sm:block">Login</a>
+                <a href="#"
+                    class="bg-black dark:bg-white text-white dark:text-black text-[10px] md:text-xs font-bold uppercase tracking-widest px-5 md:px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform">Book
+                    Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-container">
+        <video id="hero-video" autoplay muted loop playsinline
+            poster="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80">
+            <source
+                src="assets/mixkit-woman-carrying-a-suitcase-arriving-at-a-hotel-17041-hd-ready.mp4"
+                type="video/mp4">
+        </video>
+        <div id="central-logo" class="logo-center">VK</div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-center opacity-60">
+            <p class="text-[10px] uppercase tracking-[0.5em] mb-4 dark:text-white text-white">Scroll to Begin</p>
+            <div class="w-px h-16 bg-gradient-to-b from-white to-transparent mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- 1. Brief History Section -->
+    <section class="content-block bg-white dark:bg-dark py-32 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+            <div class="reveal-up">
+                <span class="text-xs font-bold tracking-[0.3em] uppercase text-gray-400 mb-4 block">Since 1994</span>
+                <h2 class="text-5xl md:text-7xl font-bold mb-8 dark:text-white text-black leading-tight">A Legacy of
+                    <br><span class="italic font-light text-gray-400">Excellence.</span></h2>
+                <p class="text-gray-500 dark:text-gray-400 text-lg leading-relaxed mb-8">
+                    What started as a boutique retreat in the coastal cliffs has evolved into a global benchmark for
+                    luxury. Virgin Kourt represents the intersection of local heritage and modern architectural
+                    brilliance.
+                </p>
+                <button
+                    class="flex items-center group space-x-4 dark:text-white text-black font-semibold text-sm tracking-widest uppercase">
+                    <span>Read Our Story</span>
+                    <div
+                        class="w-10 h-10 rounded-full border border-gray-300 dark:border-white/20 flex items-center justify-center group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="relative reveal-up">
+                <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1551882547-ff43c63efe56?auto=format&fit=crop&w=800&q=80"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                        alt="History">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-gap"></div>
+
+    <!-- 2. Suites Section -->
+    <section class="content-block bg-gray-50 dark:bg-[#080808] py-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="reveal-up">
+                    <h2 class="text-4xl md:text-6xl font-bold dark:text-white text-black">Master Suites</h2>
+                    <p class="text-gray-500 mt-4">Selected living spaces for the discerning traveler.</p>
+                </div>
+                <button
+                    class="reveal-up px-8 py-4 bg-white dark:bg-white/5 shadow-sm rounded-full text-xs font-bold uppercase tracking-widest dark:text-white text-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all border border-gray-100 dark:border-transparent">View
+                    All Suites</button>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="reveal-up group">
+                    <div class="overflow-hidden rounded-3xl aspect-video mb-6 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-center px-2">
+                        <div>
+                            <h3 class="text-xl font-bold dark:text-white text-black">The Penthouse Kourt</h3>
+                            <p class="text-sm text-gray-500">Ocean View • 120sqm • Private Pool</p>
+                        </div>
+                        <span class="text-xl font-light dark:text-white text-black">$1,200 <small
+                                class="text-xs">/night</small></span>
+                    </div>
+                </div>
+                <div class="reveal-up group">
+                    <div class="overflow-hidden rounded-3xl aspect-video mb-6 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1000&q=80"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-center px-2">
+                        <div>
+                            <h3 class="text-xl font-bold dark:text-white text-black">Executive Pavilion</h3>
+                            <p class="text-sm text-gray-500">Garden View • 85sqm • Smart Room</p>
+                        </div>
+                        <span class="text-xl font-light dark:text-white text-black">$850 <small
+                                class="text-xs">/night</small></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-gap"></div>
+
+    <!-- 3. Facilities Section -->
+    <section class="content-block bg-white dark:bg-dark py-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-center text-4xl md:text-6xl font-bold mb-20 reveal-up dark:text-white text-black">Unrivaled
+                Facilities</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                <div
+                    class="reveal-up aspect-square glass-nav rounded-3xl flex flex-col items-center justify-center p-6 text-center group cursor-pointer hover:bg-black dark:hover:bg-white transition-all">
+                    <i data-lucide="waves"
+                        class="w-8 h-8 mb-4 group-hover:text-white dark:group-hover:text-black transition-colors dark:text-white text-black"></i>
+                    <h4
+                        class="font-bold text-sm uppercase tracking-widest group-hover:text-white dark:group-hover:text-black dark:text-white text-black">
+                        Infinity Pool</h4>
+                </div>
+                <div
+                    class="reveal-up aspect-square glass-nav rounded-3xl flex flex-col items-center justify-center p-6 text-center group cursor-pointer hover:bg-black dark:hover:bg-white transition-all">
+                    <i data-lucide="utensils"
+                        class="w-8 h-8 mb-4 group-hover:text-white dark:group-hover:text-black transition-colors dark:text-white text-black"></i>
+                    <h4
+                        class="font-bold text-sm uppercase tracking-widest group-hover:text-white dark:group-hover:text-black dark:text-white text-black">
+                        Fine Dining</h4>
+                </div>
+                <div
+                    class="reveal-up aspect-square glass-nav rounded-3xl flex flex-col items-center justify-center p-6 text-center group cursor-pointer hover:bg-black dark:hover:bg-white transition-all">
+                    <i data-lucide="dumbbell"
+                        class="w-8 h-8 mb-4 group-hover:text-white dark:group-hover:text-black transition-colors dark:text-white text-black"></i>
+                    <h4
+                        class="font-bold text-sm uppercase tracking-widest group-hover:text-white dark:group-hover:text-black dark:text-white text-black">
+                        24/7 Gym</h4>
+                </div>
+                <div
+                    class="reveal-up aspect-square glass-nav rounded-3xl flex flex-col items-center justify-center p-6 text-center group cursor-pointer hover:bg-black dark:hover:bg-white transition-all">
+                    <i data-lucide="sparkles"
+                        class="w-8 h-8 mb-4 group-hover:text-white dark:group-hover:text-black transition-colors dark:text-white text-black"></i>
+                    <h4
+                        class="font-bold text-sm uppercase tracking-widest group-hover:text-white dark:group-hover:text-black dark:text-white text-black">
+                        Wellness Spa</h4>
+                </div>
+            </div>
+            <div class="mt-16 text-center reveal-up">
+                <button
+                    class="border-b-2 border-black dark:border-white pb-2 text-sm font-bold uppercase tracking-[0.3em] dark:text-white text-black hover:opacity-50 transition-opacity">Explore
+                    All Amenities</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-gap"></div>
+
+    <!-- 4. Map Section -->
+    <section class="content-block bg-white dark:bg-[#080808] py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 mb-12 flex justify-between items-center">
+            <h2 class="text-3xl font-bold dark:text-white text-black">Find Us</h2>
+            <p class="text-gray-500 text-sm">102 Royal Boulevard, Coastal District</p>
+        </div>
+        <div
+            class="w-full h-[500px] grayscale contrast-125 dark:invert-[.9] dark:hue-rotate-180 transition-all duration-700">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.4734000267!2d-0.2333524675545642!3d5.591208975883901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9084b2b7a773%3A0xbed14ed8650e2dd3!2sAccra%2C%20Ghana!5e0!3m2!1sen!2s!4v1711820000000!5m2!1sen!2s"
+                class="w-full h-full border-none" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- 5. Footer -->
+    <footer class="bg-dark dark:bg-dark text-white pt-32 pb-12 relative z-10 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-2">
+                    <h2 class="text-5xl font-bold mb-8">Virgin Kourt</h2>
+                    <p class="text-gray-500 max-w-sm mb-8 leading-relaxed">Defining the next generation of hospitality
+                        through design, technology, and empathy.</p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center border border-white/10 rounded-full hover:bg-white hover:text-black transition-all"><i
+                                data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center border border-white/10 rounded-full hover:bg-white hover:text-black transition-all"><i
+                                data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center border border-white/10 rounded-full hover:bg-white hover:text-black transition-all"><i
+                                data-lucide="twitter" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Links</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-gray-400 transition-colors">Book a Stay</a></li>
+                        <li><a href="#" class="hover:text-gray-400 transition-colors">Our History</a></li>
+                        <li><a href="#" class="hover:text-gray-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="glass-nav p-8 rounded-3xl">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Feedback</h4>
+                    <p class="text-sm mb-6">Experience is everything to us.</p>
+                    <button
+                        class="w-full bg-white text-black py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:scale-95 transition-transform">Rate
+                        Our Service</button>
+                </div>
+            </div>
+            <div
+                class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-[0.3em] text-gray-600">
+                <p>© 2024 Virgin Kourt International. All Rights Reserved.</p>
+                <div class="flex space-x-8 mt-4 md:mt-0">
+                    <span>Designed with Passion</span>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="hover:text-white transition-colors">Back to Top</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            if (body.classList.contains('dark')) {
+                body.classList.replace('dark', 'light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.replace('light', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            // Re-render icons for dark/light state
+            lucide.createIcons();
+        });
+
+        window.onload = function () {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 1000);
+
+            // Entrance Logo
+            gsap.from("#central-logo", {
+                scale: 1.5,
+                opacity: 0,
+                duration: 2.5,
+                ease: "expo.out"
+            });
+
+            // Parallax Scroll logic
+            ScrollTrigger.create({
+                trigger: ".hero-container",
+                start: "top top",
+                end: "bottom 30%",
+                scrub: 1,
+                onUpdate: (self) => {
+                    const p = self.progress;
+                    gsap.to("#central-logo", {
+                        opacity: 1 - p * 4,
+                        scale: 1 - p * 0.4,
+                        duration: 0.1
+                    });
+
+                    if (p > 0.2) {
+                        gsap.to("#main-nav", { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.6 });
+                    } else {
+                        gsap.to("#main-nav", { opacity: 0, y: -20, pointerEvents: "none", duration: 0.4 });
+                    }
+                }
+            });
+
+            // Video Scale Parallax
+            gsap.to("#hero-video", {
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                },
+                scale: 1.2
+            });
+
+            // Reveal Content Blocks
+            const reveals = gsap.utils.toArray('.reveal-up');
+            reveals.forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 80,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power3.out"
+                });
+            });
+        };
+    </script>
+</body>
+
+</html>
